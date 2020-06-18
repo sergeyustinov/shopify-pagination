@@ -71,7 +71,7 @@ GEM
     tins (0.13.2)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
-    yard (0.9.12)
+    yard (0.9.25)
     zeitwerk (2.3.0)
 
 PLATFORMS
