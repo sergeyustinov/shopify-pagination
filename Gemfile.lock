@@ -33,7 +33,7 @@ GEM
       concurrent-ruby (~> 1.0)
     minitest (5.11.3)
     rack (2.2.3)
-    rake (10.5.0)
+    rake (13.0.1)
     shopify_api (9.1.0)
       activeresource (>= 4.1.0, < 6.0.0)
       graphql-client
@@ -48,7 +48,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.16)
-  rake (~> 10.0)
+  rake (~> 13.0)
   shopify-pagination!
 
 BUNDLED WITH
