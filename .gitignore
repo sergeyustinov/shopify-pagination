@@ -1,0 +1,13 @@
+.DS_Store
+/.bundle/
+/.code/
+/.idea/
+/.ruby-gemset
+/.ruby-version
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
