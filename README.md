@@ -15,7 +15,7 @@ Example:
 
 ```ruby
 ShopifyAPI::Session.temp(domain, token) do
-  @products = ShopifyAPI::Product.all(params: { since_id: 0, limit: 250 })
+  @products = ShopifyAPI::Product.all(params: { limit: 250 })
   @products = ShopifyAPI::Product.all(params: { since_id: 0, limit: 250 })
   @products = ShopifyAPI::Product.all(params: { page_info: "eyJvcmRlciI6ImlkIGFzYyIsImxhc3RfaWQiOjE2MDE2OTE5NzY0OCwibGFzdF92YWx1ZSI6IjE2MDE2OTE5NzY0OCIsImRpcmVjdGlvbiI6Im5leHQifQ", limit: 250 })
 end
