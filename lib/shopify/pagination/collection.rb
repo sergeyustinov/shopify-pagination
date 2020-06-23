@@ -6,6 +6,7 @@
 #   products = Shopify::Product.all(params: { since_id: 0, limit: 25 })
 #   products = Shopify::Product.all(params: { page_info: "eyJvcmRlciI6ImlkIGFzYyIsImxhc3RfaWQiOjE2MDE2OTE5NzY0OCwibGFzdF92YWx1ZSI6IjE2MDE2OTE5NzY0OCIsImRpcmVjdGlvbiI6Im5leHQifQ", limit: 25 })
 class Shopify::Pagination::Collection < ActiveResource::Collection
+  attr_accessor :current_count
 
   alias_method :model, :resource_class
 
@@ -13,6 +14,11 @@ class Shopify::Pagination::Collection < ActiveResource::Collection
   DEFAULT_LIMIT_VALUE = 50
 
   ENTRIES_INFO_I18N_KEY = 'helpers.page_entries_info.entry'.freeze
+
+  def initialize elements = []
+    super elements
+    collection_got @elements
+  end
 
   def response
     @response ||= resource_class&.connection&.response
@@ -59,8 +65,20 @@ class Shopify::Pagination::Collection < ActiveResource::Collection
     next_page_info.present?
   end
 
-  def collection_got items
-    @since_id = items.last&.id
+  def previous_page_info
+    cursor_pagination.dig(:previous, :page_info)
+  end
+
+  def previous_page?
+    previous_page_info.present?
+  end
+
+  def collection_got(items)
+    if item = items.last
+      @since_id = item.is_a?(Hash) ? item[:id] : item.id
+    end
+
+    self.current_count = items.size
 
     items
   end
@@ -90,5 +108,15 @@ class Shopify::Pagination::Collection < ActiveResource::Collection
     end
 
     @cursor_pagination
+  end
+
+  def total_count
+    @total_count ||= begin
+      if !next_page? && !previous_page?
+        current_count
+      else
+        resource_class.count(original_params.with_indifferent_access.except(:page, :page_info, :limit))
+      end
+    end
   end
 end
