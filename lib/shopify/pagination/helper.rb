@@ -9,6 +9,7 @@ module Shopify
         res = ["<div class='pagination cursor-based #{options[:pagination_class]}'><span class='button-group'>"]
 
         additional_params = options.with_indifferent_access[:params] || {}
+        additional_params[:only_path] = false
 
         if items.cursor_pagination[:previous] || items.cursor_pagination[:next]
           res << link_to(
